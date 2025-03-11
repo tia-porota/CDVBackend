@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node --env-file ./.env ./dist/App.js"
+    "run2": "node --env-file .env --watch ./dist/App.js",
+    "run": "tsc && concurrently \"tsc -w\" \"node --env-file .env --watch ./dist/App.js\""
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "csv-parser": "^3.2.0",
     "express": "^4.21.2",
     "pg": "^8.13.3"
   }
