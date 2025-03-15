@@ -20,17 +20,17 @@ const listAllCsvFilesFromDir = (path) => {
 const moveFileToDoneDir = (path, fileName) => {
     fs.rename(path + fileName, path + "done/" + fileName, () => { });
 };
-const processAllCsvFilesFromDir = (path) => __awaiter(void 0, void 0, void 0, function* () {
+const processAllCsvFilesFromDir = (path, test) => __awaiter(void 0, void 0, void 0, function* () {
     const files = listAllCsvFilesFromDir(path);
     const data = [];
     for (const file of files) {
         const result = yield (0, csvparser_1.parseCsv)(path + file);
         data.push(result);
-        moveFileToDoneDir(path, file);
+        if (!test)
+            moveFileToDoneDir(path, file); //else console.log(data); 
     }
-    //console.log(data);
     return data;
 });
 exports.processAllCsvFilesFromDir = processAllCsvFilesFromDir;
 //console.log(listAllCsvFilesFromDir(path));
-//processAllCsvFilesFromDir(path);
+//processAllCsvFilesFromDir("./data/test/",true);

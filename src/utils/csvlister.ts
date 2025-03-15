@@ -1,4 +1,5 @@
 import { parseCsv } from "./csvparser";
+import { iCsv } from "./types";
 const fs = require("fs");
 //const path: string = "./data/mdp/";
 
@@ -11,18 +12,20 @@ const moveFileToDoneDir = (path:string,fileName:String) => {
     fs.rename(path+fileName,path+"done/"+fileName,()=>{})
 };
 
-export const processAllCsvFilesFromDir = async (path: string) => {
+
+export const processAllCsvFilesFromDir = async (path: string, test?:boolean) => {
   const files: String[] = listAllCsvFilesFromDir(path);
-  const data: Object[] = [];
+  const data = [];
 
   for (const file of files) {
     const result = await parseCsv(path + file);
     data.push(result);
-    moveFileToDoneDir(path,file)
+    if (!test) moveFileToDoneDir(path,file); //else console.log(data); 
+    
   }
-  //console.log(data);
+  
   return data;
 };
 
 //console.log(listAllCsvFilesFromDir(path));
-//processAllCsvFilesFromDir(path);
+//processAllCsvFilesFromDir("./data/test/",true);

@@ -1,6 +1,6 @@
 const csv = require("csv-parser");
 const fs = require("fs");
-
+import {iCsv} from './types'
 //const path: string = "./data/mdp/test.csv";
 
 interface CsvRow {
@@ -25,7 +25,7 @@ const formateDate = (date: string): string => {
   return newDate.toISOString().split("T")[0];
 };
 
-export const parseCsv = async (path: string,test?:boolean): Promise<Object> => {
+export const parseCsv = async (path: string,test?:boolean) => {
 
   try{
   const franchise: string = path.split("/")[path.split("/").length - 2];
@@ -34,15 +34,16 @@ export const parseCsv = async (path: string,test?:boolean): Promise<Object> => {
     franchise,
     day: formateDate(single.Hora),
     hour: key,
-    entries: single["Núm. entradas"],
-    exits: single["No. Salida"],
+    entries: Number(single["Núm. entradas"]),
+    exits: Number(single["No. Salida"]),
+  
   }));
   if(test) console.log(parsedData); 
   return parsedData;
 }
 catch(err){
-  return {"error":err}
+  throw new Error("Error al parsear el archivo CSV");
 }
 };
-
+//parseCsv("./data/test/test.csv",true)
 //console.log(parseCsv(path));

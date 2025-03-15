@@ -1,14 +1,12 @@
 import express from "express";
 const router = express.Router();
 
-router.get("/", async (_req,res,_next)=>{
-    
-    res.status(200).json("hola:hola");
-})
+import { getAllDataFromAllFranchises, getAllFranchises, importAllCsvDataFromDirName } from "../controllers/totals.controller";
 
-/*
-router.get("/", async (_req,res,_next)=>{
-    res.status(200).json("hola:hola");
-})
-*/
+router.get("/", getAllDataFromAllFranchises)
+router.post("/", importAllCsvDataFromDirName);
+router.get("/franchises", getAllFranchises);
+
+
+
 export default router;

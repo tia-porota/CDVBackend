@@ -36,16 +36,17 @@ const parseCsv = (path, test) => __awaiter(void 0, void 0, void 0, function* () 
             franchise,
             day: formateDate(single.Hora),
             hour: key,
-            entries: single["Núm. entradas"],
-            exits: single["No. Salida"],
+            entries: Number(single["Núm. entradas"]),
+            exits: Number(single["No. Salida"]),
         }));
         if (test)
             console.log(parsedData);
         return parsedData;
     }
     catch (err) {
-        return { "error": err };
+        throw new Error("Error al parsear el archivo CSV");
     }
 });
 exports.parseCsv = parseCsv;
+//parseCsv("./data/test/test.csv",true)
 //console.log(parseCsv(path));
