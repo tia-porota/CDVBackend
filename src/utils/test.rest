@@ -1,0 +1,21 @@
+POST http://localhost:4000/api/v1/data 
+Content-Type: application/json
+
+{
+    "dirName":"test"
+
+}
+
+###
+
+GET http://localhost:4000/api/v1/data
+
+###
+
+GET http://localhost:4000/api/v1/data/franchises
+
+
+###
+
+
+GET http://localhost:4000/api/v1/data?dirName=test&dateFrom=2024-12-25&dateUntil=2024-12-26

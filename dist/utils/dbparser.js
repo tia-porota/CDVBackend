@@ -13,7 +13,7 @@ exports.parseToDb = void 0;
 const csvlister_1 = require("./csvlister");
 const parseToDb = (path, franchiseId) => __awaiter(void 0, void 0, void 0, function* () {
     let stringQuery = "INSERT INTO entries_exits(franchise_id,date,hour,entries,exits) VALUES";
-    const result = yield (0, csvlister_1.processAllCsvFilesFromDir)(path, true);
+    const result = yield (0, csvlister_1.processAllCsvFilesFromDir)(path);
     result.map((single) => {
         for (const data of single) {
             let aux = `(${franchiseId},'${data.day}',${data.hour},${data.entries},${data.exits}),`;

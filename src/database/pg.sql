@@ -38,3 +38,31 @@ SELECT
 FROM
     entries_exits as ee
     LEFT JOIN franchises as f ON f.id = ee.franchise_id;
+
+
+SELECT
+    f.displayName,
+    ee.date,
+    ee.hour,
+    ee.entries,
+    ee.exits
+FROM
+    entries_exits as ee
+    LEFT JOIN franchises as f ON f.id = ee.franchise_id
+WHERE
+    ee.date BETWEEN '2024-12-25' AND '2024-12-25';
+
+
+SELECT
+    f.displayName,
+    ee.date,
+    ee.hour,
+    ee.entries,
+    ee.exits
+FROM
+    entries_exits as ee
+    LEFT JOIN franchises as f ON f.id = ee.franchise_id
+WHERE
+    ee.date BETWEEN '2024-12-25' AND '2024-12-25'
+AND
+    ee.franchise_id = '1';

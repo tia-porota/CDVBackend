@@ -3,7 +3,7 @@ import { iCsv } from "./types";
 export const parseToDb = async (path: string, franchiseId: number) : Promise<string> => {
   let stringQuery: string =
     "INSERT INTO entries_exits(franchise_id,date,hour,entries,exits) VALUES";
-  const result = await processAllCsvFilesFromDir(path, true);
+  const result = await processAllCsvFilesFromDir(path);
   result.map((single) => {
     for (const data of single) {
       let aux = `(${franchiseId},'${data.day}',${data.hour},${data.entries},${data.exits}),`;

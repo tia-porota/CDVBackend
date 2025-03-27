@@ -1,11 +1,13 @@
 import express from "express";
 const router = express.Router();
 
-import { getAllDataFromAllFranchises, getAllFranchises, importAllCsvDataFromDirName } from "../controllers/totals.controller";
+import { createNewFranchise, getAllDataFromAllFranchises, getAllFranchises, getDataFromDateRangeAndFranchise, importAllCsvDataFromDirName } from "../controllers/totals.controller";
 
-router.get("/", getAllDataFromAllFranchises)
+//router.get("/", getAllDataFromAllFranchises)
 router.post("/", importAllCsvDataFromDirName);
+router.get("/",getDataFromDateRangeAndFranchise)
 router.get("/franchises", getAllFranchises);
+router.post("/franchises", createNewFranchise);
 
 
 

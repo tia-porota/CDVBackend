@@ -9,20 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllDataFromAllFranchises = exports.importAllCsvDataFromDirName = exports.getAllFranchises = void 0;
+exports.createNewFranchise = exports.getDataFromDateRangeAndFranchise = exports.getAllDataFromAllFranchises = exports.importAllCsvDataFromDirName = exports.getAllFranchises = void 0;
 const db_1 = require("../database/db");
 const dbparser_1 = require("../utils/dbparser");
-const getAllFranchises = (_req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllFranchises = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { rows } = yield db_1.db.query("SELECT * FROM franchises");
         res.status(200).json(rows);
     }
     catch (err) {
-        res.status(500).send("Internal Server Error");
+        next(err);
     }
 });
 exports.getAllFranchises = getAllFranchises;
-const importAllCsvDataFromDirName = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
+const importAllCsvDataFromDirName = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { dirName } = req.body;
         const { rows } = yield db_1.db.query("SELECT * FROM franchises WHERE dirName = $1 LIMIT 1", [dirName]);
@@ -33,20 +33,43 @@ const importAllCsvDataFromDirName = (req, res, _next) => __awaiter(void 0, void 
         res.status(201).send(result);
     }
     catch (err) {
-        res.sendStatus(500).send(err);
+        next(err);
     }
 });
 exports.importAllCsvDataFromDirName = importAllCsvDataFromDirName;
-const getAllDataFromAllFranchises = (_req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllDataFromAllFranchises = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { rows } = yield db_1.db.query("SELECT f.displayName, ee.date, ee.hour, ee.entries, ee.exits FROM entries_exits as ee LEFT JOIN franchises as f ON f.id = ee.franchise_id;");
         res.status(200).json(rows);
     }
     catch (err) {
-        res.status(500).send("Internal Server Error");
+        next(err);
     }
 });
 exports.getAllDataFromAllFranchises = getAllDataFromAllFranchises;
+const getDataFromDateRangeAndFranchise = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { dirName, dateFrom, dateUntil } = req.query;
+        const franchise = yield db_1.db.query("SELECT * FROM franchises WHERE dirName = $1 LIMIT 1", [dirName]);
+        const { rows } = yield db_1.db.query("SELECT f.displayName, ee.date, ee.hour, ee.entries, ee.exits FROM entries_exits as ee LEFT JOIN franchises as f ON f.id = ee.franchise_id WHERE ee.date BETWEEN $2 AND $3 AND f.id = $1;", [franchise.rows[0].id, dateFrom, dateUntil]);
+        res.status(200).json(rows);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getDataFromDateRangeAndFranchise = getDataFromDateRangeAndFranchise;
+const createNewFranchise = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { dirName, displayName } = req.body;
+        const { rows } = yield db_1.db.query("INSERT INTO franchises(dirname,displayname) VALUES($1,$2);", [dirName, displayName]);
+        res.status(200).json(rows);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.createNewFranchise = createNewFranchise;
 /*
 
 export const getAllFranchises = async (_req:express.Request,res:express.Response,_next:express.NextFunction) => {
