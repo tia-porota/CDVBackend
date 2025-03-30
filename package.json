@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "run2": "node --env-file .env --watch ./dist/App.js",
-    "run": "tsc && concurrently \"tsc -w\" \"node --env-file .env --watch ./dist/App.js\""
+    "build": "tsc",
+    "start":"node --env-file .env ./dist/App.js",
+    "watch": "node --env-file .env --watch ./dist/App.js",
+    "dev": "tsc && concurrently \"tsc -w\" \"node --env-file .env --watch ./dist/App.js\""
   },
   "keywords": [],
   "author": "",
