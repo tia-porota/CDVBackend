@@ -17,5 +17,7 @@ GET http://localhost:4000/api/v1/data/franchises
 
 ###
 
+POST 
 
+###
 GET http://localhost:4000/api/v1/data?dirName=test&dateFrom=2024-12-25&dateUntil=2024-12-26

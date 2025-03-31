@@ -5,9 +5,11 @@ COPY package*.json ./
 RUN npm install
 
 COPY . . 
-COPY .env .env 
 
 RUN npm run build
 EXPOSE 4000
 
 CMD ["npm", "run", "start"]
+
+# docker build backend-image .
+# docker run -v "route/to/data:/app/data" -p 4000:4000 --env-file .env -d backend-image
